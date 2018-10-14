@@ -549,7 +549,6 @@ ui <-  dashboardPage(skin = "red",
                                     sliderInput(inputId = "TotalWorkingYears", 
                                                 label = "Total Working Years", 
                                                 value = mean(shiny_d$TotalWorkingYears), min = min(shiny_d$TotalWorkingYears), max = max(shiny_d$TotalWorkingYears), step = 1),
-                                    
                                     radioButtons("Overtime", label = "Overtime",
                                                  choices = list("Yes", "No"), 
                                                  selected = "Yes"),
@@ -624,7 +623,7 @@ server <- function(input, output) {
   })
   
   output$wordcloud2 <- renderWordcloud2({
-    dataWeights <- data.frame("word" = c('Age',	'Turnover',	'Business Travel',	'Daily Rate',	'Department',	'Distance From Home',	'Education',	'Education Field',	'Environment Satisfaction',	'Gender',	'Hourly Rate',	
+    dataWeights <- data.frame("word" = c('Age',	'Business Travel',	'Daily Rate',	'Department',	'Distance From Home',	'Education',	'Education Field',	'Environment Satisfaction',	'Gender',	'Hourly Rate',	
                                          'Job Involvement',	'Job Level',	'Job Role',	'Job Satisfaction',	'Marital Status',	'Monthly Income',	'Monthly Rate', 'Num of Companies Worked',' Over Time',	'Percent Salary Hike',	
                                          'Performance Rating',	'Relationship Satisfaction',	'Standard Hours',	'Stock Option Level',	'Total Working Years',	'Training Times Last Year',	'Work Life Balance',	'Years At Company',	
                                          'Years In Current Role',	'Years Since Last Promotion',	'Years With Current Manager'),
