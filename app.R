@@ -1,5 +1,5 @@
 #######################################################
-# Project : Attrition rate prediction in HR Analytics #
+# Project : Employeee Turnover Prediction in HR Analytics #
 # Team    : Gautam HArinarayanan                      #
 #           Mayank Gulati                             #
 #           Carol Sun                                 #
@@ -7,6 +7,7 @@
 #           Tugce Sahan                               #
 #######################################################
 
+# Online version: https://tugcesahan.shinyapps.io/HR-Analytics/
 # Loading necessary libraries
 
 library(dplyr)
@@ -21,8 +22,6 @@ library(e1071)
 library(pROC)
 library(DMwR)
 library(rpart)
-library(grid)
-library(devtools)
 
 library(rsconnect)
 library(shiny)
@@ -34,7 +33,7 @@ library(wordcloud2)
 library(shinydashboard)
 #library(modeest)
 
-
+# plot-ref:https://www.kaggle.com/esmaeil391/ibm-hr-analysis-with-90-3-acc-and-89-auc
 
 ################################################################################
 # Data loading
@@ -543,13 +542,13 @@ ui <-  dashboardPage(skin = "red",
                                                 value = mean(shiny_d$DistanceFromHome), min = min(shiny_d$DistanceFromHome), max = max(shiny_d$DistanceFromHome), step = 5),
                                     sliderInput(inputId = "age", 
                                                 label = "Age", 
-                                                value = mean(shiny_d$Age), min = min(shiny_d$Age), max = max(shiny_d$Age), step = 2),
+                                                value = mean(shiny_d$Age), min = min(shiny_d$Age), max = max(shiny_d$Age), step = 1),
                                     sliderInput(inputId = "YearsAtCompany", 
                                                 label = "Years at Company", 
-                                                value = mean(shiny_d$YearsAtCompany), min = min(shiny_d$YearsAtCompany), max = 20, step = 2),
+                                                value = mean(shiny_d$YearsAtCompany), min = min(shiny_d$YearsAtCompany), max = 20, step = 1),
                                     sliderInput(inputId = "TotalWorkingYears", 
                                                 label = "Total Working Years", 
-                                                value = mean(shiny_d$TotalWorkingYears), min = min(shiny_d$TotalWorkingYears), max = max(shiny_d$TotalWorkingYears), step = 2),
+                                                value = mean(shiny_d$TotalWorkingYears), min = min(shiny_d$TotalWorkingYears), max = max(shiny_d$TotalWorkingYears), step = 1),
                                     
                                     radioButtons("Overtime", label = "Overtime",
                                                  choices = list("Yes", "No"), 
@@ -558,9 +557,7 @@ ui <-  dashboardPage(skin = "red",
                                                  label = "Update")
                                     
                                     ),
-                                  
                                  
-                                  
                                  mainPanel( plotOutput("plotPredict"), tags$br(),
                                             infoBox("Current Turnover Rate",verbatimTextOutput("attrate"),fill = TRUE , width = 6, color = "light-blue", icon = icon("info-circle")),  
                                             infoBox("The Probability of Employee Leaving",verbatimTextOutput("predrate"),fill = TRUE , width = 6, color = "light-blue", icon = icon("info-circle"))
@@ -631,7 +628,7 @@ server <- function(input, output) {
                                          'Job Involvement',	'Job Level',	'Job Role',	'Job Satisfaction',	'Marital Status',	'Monthly Income',	'Monthly Rate', 'Num of Companies Worked',' Over Time',	'Percent Salary Hike',	
                                          'Performance Rating',	'Relationship Satisfaction',	'Standard Hours',	'Stock Option Level',	'Total Working Years',	'Training Times Last Year',	'Work Life Balance',	'Years At Company',	
                                          'Years In Current Role',	'Years Since Last Promotion',	'Years With Current Manager'),
-                              "freq" = sample(1:20,32,replace=T))
+                              "freq" = c(5,5,4,4,7,2,2,6,1,2,7,8,7,4,4,7,1,9,9,1,2,2,1,5,8,1,3,5,1,2,1))
     wordcloud2(dataWeights, color = "random-light", size=0.5)
   })
   output$attrate <- renderText({
